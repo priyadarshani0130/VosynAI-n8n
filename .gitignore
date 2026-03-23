@@ -1,0 +1,12 @@
+.env
+*.env.local
+.n8n/
+n8n-data/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+node_modules/
+package-lock.json
+*.log
+logs/

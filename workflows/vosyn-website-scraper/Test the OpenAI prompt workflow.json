@@ -1,0 +1,337 @@
+{
+  "name": "Test the OpenAI Prompt",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.vosyn.ai/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        256,
+        0
+      ],
+      "id": "2562755c-71a2-490f-af5b-602f2e536ffc",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        192
+      ],
+      "id": "a1fe8881-705a-4887-beb8-d7e97ad41bbe",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        192
+      ],
+      "id": "f9f7287a-1939-4d15-abe2-a323647cbc0a",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "mainContent",
+              "cssSelector": "main"
+            },
+            {
+              "key": "headings",
+              "cssSelector": "h1, h2, h3, h4, h5",
+              "returnArray": true
+            },
+            {
+              "key": "images",
+              "cssSelector": "img",
+              "returnValue": "attribute",
+              "attribute": "alt",
+              "returnArray": true
+            },
+            {
+              "key": "links",
+              "cssSelector": "a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "e2de4666-859c-4b98-8ade-f75ff5428ae1",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "llama-3.3-70b-versatile",
+          "mode": "id"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "=You are an AI QA agent analyzing a webpage for bugs and issues.\n\nAnalyze this webpage content (exclude navbar/header):\n{{$json.mainContent}}\n\nHere is the heading structure of the page:\n{{$json.headings}}\n\nReturn only a valid JSON array of 5–10 issues. No explanations, no markdown, no backticks. Each item must follow this exact structure:\n{\n  \"title\": \"Short issue title\",\n  \"description\": \"Clear explanation of the issue\",\n  \"category\": \"One of: Content, UX, Grammar, Performance, SEO\",\n  \"severity\": \"🔴 High | 🟡 Medium | 🟢 Low\",\n  \"recommendation\": \"How to fix it\"\n}\n\nAutomatic scoring for severity:\n🔴 High: score 8–10 → Must fix immediately\n  - Broken functionality → 10 points\n  - Misleading or confusing content → 8 points\n  - Duplicate or missing H1 → 9 points\n  - Anything that blocks or frustrates users significantly → 8–10 points\n\n🟡 Medium: score 4–7 → Should be fixed soon\n  - UX issues that degrade experience but do not block → 5–6 points\n  - Content that could be clearer or better structured → 5 points\n  - Improper heading hierarchy → 4 points\n  - Unverified or unsourced statistics → 4 points\n\n🟢 Low: score 1–3 → Optional improvements\n  - Minor grammar or spelling mistakes → 1–2 points\n  - Minor visual or layout tweaks → 2 points\n  - Nice-to-have UX enhancements → 1–2 points\n  - Small content improvements → 1–2 points\n\nAutomatic rules for category assignment:\n  - Content: clarity, messaging, missing information, misleading text\n  - UX: user flow, buttons, navigation, calls to action, readability issues\n  - Grammar: spelling, punctuation, grammatical errors\n  - Performance: page speed hints, large assets, lazy loading\n  - SEO: heading structure issues, missing or duplicate H1/H2\n\nHeading rules: Count H1 tags found in the provided heading structure above\n  - 0 H1 tags found → flag as 🔴 High severity \"Missing H1\"\n  - 1 H1 tag found → no H1 issue to report\n  - 2 or more H1 tags found → flag as 🔴 High severity \"Duplicate H1\"\n\nOther rules:\n  - Ignore raw image URLs unless they appear as visible text to users\n  - Be thorough: provide 5–10 realistic issues across all severities\n  - Use the scoring and keyword rules above to determine severity and category automatically\n  - Prioritize clarity and actionable recommendations in each issue\n  - Always use the emoji labels exactly: 🔴 High, 🟡 Medium, 🟢 Low\n\nImportant formatting rules:\n  - Return clean JSON only\n  - No \\n inside text fields\n  - Keep descriptions under 2 sentences\n  - Keep recommendations under 1 sentence"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "store": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        656,
+        0
+      ],
+      "id": "5aa4655c-5b4f-41fd-8d32-7adf98284199",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Hjg057aHXifLHNxn",
+          "name": "OpenAi account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.first().json.output[0].content[0].text;\nconst clean = text.replace(/```json|```/g, '').trim();\nconst allBugs = JSON.parse(clean);\n\n// Deduplicate by title\nconst seen = new Set();\nconst uniqueBugs = allBugs.filter(bug => {\n  if (seen.has(bug.title)) return false;\n  seen.add(bug.title);\n  return true;\n});\n\n// Clean \\n from all text fields\nconst cleanText = (str) => str ? str.replace(/\\\\n|\\n/g, ' ').trim() : str;\n\n// Capitalize first letter\nconst capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : str;\n\nconst highBugs = uniqueBugs.filter(bug => \n  bug.severity.toLowerCase().includes('high')\n);\n\n// Truncate helper\nconst trim = (str, max = 120) =>\n  str.length > max ? str.slice(0, max).trimEnd() + '…' : str;\n\nconst formatted = highBugs.map((bug, i) =>\n  `#${i + 1} ${bug.title} [${bug.category}]\\n` +\n  `Issue: ${trim(cleanText(bug.description))}\\n` +\n  `Fix: ${trim(cleanText(bug.recommendation))}`\n).join('\\n\\n');\n\nconst severityEmoji = (s) => {\n  const val = s.toLowerCase().trim();\n  if (val.includes('high')) return '🔴 High';\n  if (val.includes('medium')) return '🟡 Medium';\n  if (val.includes('low')) return '🟢 Low';\n  return s;\n};\n\nreturn uniqueBugs.map(bug => ({\n  json: {\n    title: capitalize(cleanText(bug.title)),\n    category: capitalize(cleanText(bug.category)),\n    severity: severityEmoji(cleanText(bug.severity)),\n    description: capitalize(trim(cleanText(bug.description))),\n    recommendation: capitalize(trim(cleanText(bug.recommendation))),\n    count: highBugs.length,\n    emailBody: formatted || 'No high severity issues found.'\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1008,
+        0
+      ],
+      "id": "b12fc6e6-10c3-4f1b-9142-427cede230b5",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1h6l7jFAt6NCp2taKuUrsxx0z1kJWUZBfituLnCRU6oM/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1h6l7jFAt6NCp2taKuUrsxx0z1kJWUZBfituLnCRU6oM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.title }}",
+            "Category": "={{ $json.category }}",
+            "Description": "={{ $json.description }}",
+            "Date": "={{ $now }}",
+            "Severity": "={{ $json.severity }}",
+            "Recommendation": "={{ $json.recommendation }}"
+          },
+          "matchingColumns": [
+            "Title"
+          ],
+          "schema": [
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Severity",
+              "displayName": "Severity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Recommendation",
+              "displayName": "Recommendation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1216,
+        0
+      ],
+      "id": "ea770957-82a2-4827-94ad-ef29c0929f86",
+      "name": "Append or update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "UJAkkfrMTYAFyJ4U",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet1": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6011d558-01d9-450d-a170-2c3a7f0daef6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c4ac6f6063488c66b756c2709216d2e7459f193729e1c2d1d4fe1f41701fd366"
+  },
+  "id": "ZSbGPVoJ3sy7e3RW",
+  "tags": []
+}
