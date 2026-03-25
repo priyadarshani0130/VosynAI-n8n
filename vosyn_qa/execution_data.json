@@ -1,0 +1,156 @@
+{
+    "results": [
+        {
+            "url": "https://vosyn.ai/",
+            "status": 0,
+            "load_time_seconds": 0.14,
+            "title": "",
+            "screenshot": "screenshots/error_0.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/\nCall log:\n  - navigating to \"https://vosyn.ai/\", waiting until \"load\"\n"
+        },
+        {
+            "url": "https://vosyn.ai/vosynverse/",
+            "status": 0,
+            "load_time_seconds": 0.07,
+            "title": "",
+            "screenshot": "screenshots/error_1.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/vosynverse/\nCall log:\n  - navigating to \"https://vosyn.ai/vosynverse/\", waiting until \"load\"\n"
+        },
+        {
+            "url": "https://vosyn.ai/vosyncore/",
+            "status": 0,
+            "load_time_seconds": 0.07,
+            "title": "",
+            "screenshot": "screenshots/error_2.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/vosyncore/\nCall log:\n  - navigating to \"https://vosyn.ai/vosyncore/\", waiting until \"load\"\n"
+        },
+        {
+            "url": "https://vosyn.ai/vosynconnect/",
+            "status": 0,
+            "load_time_seconds": 0.07,
+            "title": "",
+            "screenshot": "screenshots/error_3.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/vosynconnect/\nCall log:\n  - navigating to \"https://vosyn.ai/vosynconnect/\", waiting until \"load\"\n"
+        },
+        {
+            "url": "https://vosyn.ai/about-us/",
+            "status": 0,
+            "load_time_seconds": 0.07,
+            "title": "",
+            "screenshot": "screenshots/error_4.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/about-us/\nCall log:\n  - navigating to \"https://vosyn.ai/about-us/\", waiting until \"load\"\n"
+        },
+        {
+            "url": "https://vosyn.ai/investors/",
+            "status": 0,
+            "load_time_seconds": 0.07,
+            "title": "",
+            "screenshot": "screenshots/error_5.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/investors/\nCall log:\n  - navigating to \"https://vosyn.ai/investors/\", waiting until \"load\"\n"
+        },
+        {
+            "url": "https://vosyn.ai/media-pr/",
+            "status": 0,
+            "load_time_seconds": 1.07,
+            "title": "",
+            "screenshot": "screenshots/error_6.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/media-pr/\nCall log:\n  - navigating to \"https://vosyn.ai/media-pr/\", waiting until \"load\"\n"
+        },
+        {
+            "url": "https://vosyn.ai/careers/",
+            "status": 0,
+            "load_time_seconds": 1.09,
+            "title": "",
+            "screenshot": "screenshots/error_7.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/careers/\nCall log:\n  - navigating to \"https://vosyn.ai/careers/\", waiting until \"load\"\n"
+        },
+        {
+            "url": "https://vosyn.ai/contact-us/",
+            "status": 0,
+            "load_time_seconds": 1.09,
+            "title": "",
+            "screenshot": "screenshots/error_8.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/contact-us/\nCall log:\n  - navigating to \"https://vosyn.ai/contact-us/\", waiting until \"load\"\n"
+        },
+        {
+            "url": "https://vosyn.ai/join-the-waitlist/",
+            "status": 0,
+            "load_time_seconds": 1.08,
+            "title": "",
+            "screenshot": "screenshots/error_9.png",
+            "error": "Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/join-the-waitlist/\nCall log:\n  - navigating to \"https://vosyn.ai/join-the-waitlist/\", waiting until \"load\"\n"
+        }
+    ],
+    "bugs": [
+        {
+            "url": "https://vosyn.ai/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/\nCall log:\n  - navigating to \"https://vos",
+            "screenshot": "screenshots/error_0.png"
+        },
+        {
+            "url": "https://vosyn.ai/vosynverse/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/vosynverse/\nCall log:\n  - navigating to \"",
+            "screenshot": "screenshots/error_1.png"
+        },
+        {
+            "url": "https://vosyn.ai/vosyncore/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/vosyncore/\nCall log:\n  - navigating to \"h",
+            "screenshot": "screenshots/error_2.png"
+        },
+        {
+            "url": "https://vosyn.ai/vosynconnect/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/vosynconnect/\nCall log:\n  - navigating to",
+            "screenshot": "screenshots/error_3.png"
+        },
+        {
+            "url": "https://vosyn.ai/about-us/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/about-us/\nCall log:\n  - navigating to \"ht",
+            "screenshot": "screenshots/error_4.png"
+        },
+        {
+            "url": "https://vosyn.ai/investors/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/investors/\nCall log:\n  - navigating to \"h",
+            "screenshot": "screenshots/error_5.png"
+        },
+        {
+            "url": "https://vosyn.ai/media-pr/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/media-pr/\nCall log:\n  - navigating to \"ht",
+            "screenshot": "screenshots/error_6.png"
+        },
+        {
+            "url": "https://vosyn.ai/careers/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/careers/\nCall log:\n  - navigating to \"htt",
+            "screenshot": "screenshots/error_7.png"
+        },
+        {
+            "url": "https://vosyn.ai/contact-us/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/contact-us/\nCall log:\n  - navigating to \"",
+            "screenshot": "screenshots/error_8.png"
+        },
+        {
+            "url": "https://vosyn.ai/join-the-waitlist/",
+            "severity": "High",
+            "title": "Page Load Failure",
+            "desc": "Failed to load page within limits. Error: Page.goto: net::ERR_CONNECTION_REFUSED at https://vosyn.ai/join-the-waitlist/\nCall log:\n  - navigati",
+            "screenshot": "screenshots/error_9.png"
+        }
+    ]
+}
